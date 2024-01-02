@@ -12,13 +12,22 @@ void Material::setColor(int r, int g, int b) {
     setDiffuse(QColor(r, g, b));
 }
 
-std::istream & operator>>(std::istream &stream, Material &material) {
-    int r, g, b;
+QTextStream & operator>>(QTextStream &stream, Material &material) {
+    QString attribute;
+    stream >> attribute;
 
+    int r, g, b;
     stream >> r >> g >> b;
 
     material.setAmbient(QColor(128, 128, 128));
     material.setDiffuse(QColor(r, g, b));
+
+    return stream;
+}
+
+QDebug operator<<(QDebug stream, const Material &material) {
+
+    stream << material.diffuse().red() << material.diffuse().green() << material.diffuse().blue();
 
     return stream;
 }

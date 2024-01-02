@@ -2,16 +2,38 @@
 
 namespace gs {
 
-std::istream & operator>>(std::istream &stream, Transform &transform) {
-    float roll, pitch, yaw;
-    float x, y, z;
+QTextStream & operator>>(QTextStream &stream, Transform &transform) {
+    while(!stream.atEnd()) {
+        QString attribute;
+        stream >> attribute;
 
-    stream >> roll >> pitch >> yaw >> x >> y >> z;
+        if(attribute=="rotation") {
+            float roll, pitch, yaw;
+            stream >> roll >> pitch >> yaw;
+            transform.setRotationX(roll);
+            transform.setRotationY(pitch);
+            transform.setRotationZ(yaw);
+        } else if(attribute=="translation") {
+            float x, y, z;
+            stream >> x >> y >> z;
+            transform.setTranslation(QVector3D(x, y, z));
+        } else if(attribute=="scale") {
+            float x, y, z;
+            stream >> x >> y >> z;
+            transform.setScale3D(QVector3D(x, y, z));
+        } else {
+            break;
+        }
+    }
 
-    transform.setTranslation(QVector3D(x, y, z));
-    transform.setRotationX(roll);
-    transform.setRotationY(pitch);
-    transform.setRotationZ(yaw);
+    return stream;
+}
+
+QDebug operator<<(QDebug stream, const Transform &transform) {
+
+    stream << transform.rotationX() << transform.rotationY() << transform.rotationZ();
+    stream << transform.translation().x() << transform.translation().y() << transform.translation().z();
+    stream << transform.scale3D().x() << transform.scale3D().y() << transform.scale3D().z();
 
     return stream;
 }

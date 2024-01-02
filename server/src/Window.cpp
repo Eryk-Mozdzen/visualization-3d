@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include <QTimer>
 
 #include "Window.h"
@@ -10,10 +12,12 @@
 
 Window::Window() {
 
+    setTitle("3D Visualization Server");
+
     root = new Qt3DCore::QEntity;
 
     objects.push_back(new gs::Ground(root));
-    objects.push_back(new gs::Sphere(root));
+    /*objects.push_back(new gs::Sphere(root));
     objects.push_back(new gs::Cylinder(root));
     objects.push_back(new gs::Cuboid(root));
     objects.push_back(new gs::Model(root, "/home/emozdzen/Downloads/3DBenchy.stl"));
@@ -32,7 +36,7 @@ Window::Window() {
     objects[4]->getTransformLocal()->setTranslation(QVector3D(0, 0, -3));
     objects[4]->getTransformLocal()->setScale(0.1);
     objects[4]->getTransformLocal()->setRotationX(-90);
-    objects[4]->update();
+    objects[4]->update();*/
 
     Qt3DRender::QCamera *camera = this->camera();
     camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
@@ -45,7 +49,7 @@ Window::Window() {
     defaultFrameGraph()->setClearColor(Qt::black);
     setRootEntity(root);
 
-    float *t = new float;
+    /*float *t = new float;
     *t = 0;
     QTimer *timer = new QTimer();
     connect(timer, &QTimer::timeout, [this, t]() {
@@ -55,11 +59,41 @@ Window::Window() {
 
         *t +=0.01;
     });
-    timer->start(20);
+    timer->start(20);*/
 
     connect(&server, &gs::Server::receive, this, &Window::receive);
 }
 
 void Window::receive(QString line) {
-    qDebug() << line;
+    line = line.toLower();
+
+    QTextStream stream(&line);
+
+    QString command;
+    QString name;
+    QString type;
+    QString path;
+    gs::Transform transform;
+    gs::Material material;
+
+    stream >> command;
+
+    while(!stream.atEnd()) {
+        QString key;
+        stream >> key;
+
+        if(key=="name") {
+            stream >> name;
+        } else if(key=="type") {
+            stream >> type;
+        } else if(key=="transform") {
+            stream >> transform;
+        } else if(key=="material") {
+            stream >> material;
+        } else if(key=="path") {
+            stream >> path;
+        }
+    }
+
+    // apply
 }

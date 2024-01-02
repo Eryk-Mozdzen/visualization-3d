@@ -1,7 +1,5 @@
 #pragma once
 
-#include <istream>
-
 #include <Qt3DExtras>
 
 namespace gs {
@@ -12,7 +10,8 @@ public:
 
     void setColor(int r, int g, int b);
 
-    friend std::istream & operator>>(std::istream &stream, Material &material);
+    friend QTextStream & operator>>(QTextStream &stream, Material &material);
+    friend QDebug operator<<(QDebug stream, const Material &material);
 };
 
 }

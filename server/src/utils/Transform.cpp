@@ -4,6 +4,17 @@ namespace gs {
 
 QTextStream & operator>>(QTextStream &stream, Transform &transform) {
     while(!stream.atEnd()) {
+        const QString line = stream.readAll();
+        QList<QString> words = line.split(' ');
+        words.removeAll(QString());
+        const QString first = words.first();
+
+        stream << line;
+
+        if(first!="rotation" && first!="translation" && first!="scale") {
+            break;
+        }
+
         QString attribute;
         stream >> attribute;
 
@@ -21,8 +32,6 @@ QTextStream & operator>>(QTextStream &stream, Transform &transform) {
             float x, y, z;
             stream >> x >> y >> z;
             transform.setScale3D(QVector3D(x, y, z));
-        } else {
-            break;
         }
     }
 

@@ -16,27 +16,10 @@ Window::Window() {
 
     root = new Qt3DCore::QEntity;
 
-    objects.push_back(new gs::Ground(root));
-    /*objects.push_back(new gs::Sphere(root));
-    objects.push_back(new gs::Cylinder(root));
-    objects.push_back(new gs::Cuboid(root));
-    objects.push_back(new gs::Model(root, "/home/emozdzen/Downloads/3DBenchy.stl"));
-
-    objects[1]->getMaterial()->setColor(255, 0, 0);
-    objects[1]->getTransformGlobal()->setTranslation(QVector3D(0, 0, 0));
-
-    objects[2]->getMaterial()->setColor(0, 255, 0);
-    objects[2]->getTransformGlobal()->setTranslation(QVector3D(0, 3, 0));
-
-    objects[3]->getMaterial()->setColor(0, 0, 255);
-    objects[3]->getTransformGlobal()->setTranslation(QVector3D(0, 0, 100));
-    objects[3]->addChild(objects[4]);
-
-    objects[4]->getMaterial()->setColor(255, 0, 255);
-    objects[4]->getTransformLocal()->setTranslation(QVector3D(0, 0, -3));
-    objects[4]->getTransformLocal()->setScale(0.1);
-    objects[4]->getTransformLocal()->setRotationX(-90);
-    objects[4]->update();*/
+    QString str;
+    QTextStream stream(&str);
+    gs::Object *ground = new gs::Ground(root, stream);
+    (void)ground;
 
     Qt3DRender::QCamera *camera = this->camera();
     camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
@@ -49,51 +32,82 @@ Window::Window() {
     defaultFrameGraph()->setClearColor(Qt::black);
     setRootEntity(root);
 
-    /*float *t = new float;
-    *t = 0;
-    QTimer *timer = new QTimer();
-    connect(timer, &QTimer::timeout, [this, t]() {
-        this->objects[3]->getTransformGlobal()->setTranslation(10*QVector3D(std::sin(*t), 0, std::cos(*t)));
-        this->objects[4]->getTransformLocal()->setRotationY(*t*180/3.1415);
-        this->objects[4]->update();
-
-        *t +=0.01;
-    });
-    timer->start(20);*/
-
     connect(&server, &gs::Server::receive, this, &Window::receive);
 }
 
+gs::Object * Window::findLeaf(QList<QString> tree) {
+    if(tree.isEmpty()) {
+        return nullptr;
+    }
+
+    gs::Object *leaf = objects.value(tree.front());
+
+    if(leaf==nullptr) {
+        return nullptr;
+    }
+
+    tree.pop_front();
+
+    for(const QString &child : tree) {
+        leaf = leaf->getChild(child);
+
+        if(leaf==nullptr) {
+            return nullptr;
+        }
+    }
+
+    return leaf;
+}
+
 void Window::receive(QString line) {
-    line = line.toLower();
+    //qDebug() << line;
 
     QTextStream stream(&line);
 
     QString command;
-    QString name;
-    QString type;
-    QString path;
-    gs::Transform transform;
-    gs::Material material;
-
     stream >> command;
 
-    while(!stream.atEnd()) {
-        QString key;
-        stream >> key;
-
-        if(key=="name") {
-            stream >> name;
-        } else if(key=="type") {
-            stream >> type;
-        } else if(key=="transform") {
-            stream >> transform;
-        } else if(key=="material") {
-            stream >> material;
-        } else if(key=="path") {
-            stream >> path;
+    if(command=="clear") {
+        QMap<QString, gs::Object *>::iterator it = objects.begin();
+        while(it!=objects.end()) {
+            delete it.value();
+            it = objects.erase(it);
         }
-    }
+    } else if(command=="create") {
+        QString name;
+        QString type;
+        stream >> name >> type;
 
-    // apply
+        QList<QString> tree = name.split('.');
+        tree.pop_back();
+
+        gs::Object *parent = findLeaf(tree);
+        gs::Object *child = nullptr;
+
+        if(type=="cuboid") {
+            child = new gs::Cuboid(root, stream);
+        } else if(type=="sphere") {
+            child = new gs::Sphere(root, stream);
+        } else if(type=="cylinder") {
+            child = new gs::Cylinder(root, stream);
+        } else if(type=="model") {
+            child = new gs::Model(root, stream);
+        } else {
+            qDebug() << "unknown object type";
+            return;
+        }
+
+        if(parent==nullptr) {
+            objects[name] = child;
+        } else {
+            parent->addChild(name, child);
+        }
+
+    } else if(command=="update") {
+        QString name;
+        stream >> name;
+
+        const QList<QString> tree = name.split('.');
+
+    }
 }

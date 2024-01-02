@@ -6,7 +6,7 @@ namespace gs {
 
 class Model : public Object {
 public:
-    Model(Qt3DCore::QEntity *root, const QString path);
+    Model(Qt3DCore::QEntity *root, QTextStream &stream);
 };
 
 }

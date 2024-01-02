@@ -2,7 +2,7 @@
 
 namespace gs {
 
-Cylinder::Cylinder(Qt3DCore::QEntity *root) : Object(root) {
+Cylinder::Cylinder(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
 
     Qt3DExtras::QCylinderMesh *mesh = new Qt3DExtras::QCylinderMesh();
     mesh->setRadius(1.0f);

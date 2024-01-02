@@ -11,12 +11,13 @@
 class Window : public Qt3DExtras::Qt3DWindow {
     Q_OBJECT
 
-    QVector<gs::Object *> objects;
+    QMap<QString, gs::Object *> objects;
 
     Qt3DCore::QEntity *root;
 
     gs::Server server;
 
+    gs::Object * findLeaf(QList<QString> tree);
     void receive(QString line);
 
 public:

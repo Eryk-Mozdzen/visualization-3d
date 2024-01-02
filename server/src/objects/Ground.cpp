@@ -2,7 +2,7 @@
 
 namespace gs {
 
-Ground::Ground(Qt3DCore::QEntity *root) : Object(root) {
+Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
 
     Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(root);
     Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(root);

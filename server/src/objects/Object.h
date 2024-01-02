@@ -17,12 +17,15 @@ protected:
     Transform *transformLocal;
 
     Object *parent;
-    QVector<Object *> childs;
+    QMap<QString, Object *> childs;
 
-    Object(Qt3DCore::QEntity *root);
+    Object(Qt3DCore::QEntity *root, QTextStream &stream);
 
 public:
-    void addChild(Object *child);
+    ~Object();
+
+    void addChild(const QString name, Object *child);
+    Object * getChild(const QString name);
     void update();
 
     Material * getMaterial() const;

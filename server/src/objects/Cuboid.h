@@ -6,7 +6,7 @@ namespace gs {
 
 class Cuboid : public Object {
 public:
-    Cuboid(Qt3DCore::QEntity *root);
+    Cuboid(Qt3DCore::QEntity *root, QTextStream &stream);
 };
 
 }

@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
 	"src/main.cpp"
 	"src/Window.cpp"
 	"src/CameraController.cpp"
+	"src/Server.cpp"
 
 	"src/objects/Object.cpp"
 	"src/objects/Ground.cpp"

@@ -56,4 +56,10 @@ Window::Window() {
         *t +=0.01;
     });
     timer->start(20);
+
+    connect(&server, &gs::Server::receive, this, &Window::receive);
+}
+
+void Window::receive(QString line) {
+    qDebug() << line;
 }

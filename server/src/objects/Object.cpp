@@ -81,4 +81,32 @@ Transform * Object::getTransformLocal() const {
     return transformLocal;
 }
 
+QTextStream & operator>>(QTextStream &stream, Object &object) {
+
+    while(!stream.atEnd()) {
+        const QString line = stream.readAll();
+        QList<QString> words = line.split(' ');
+        words.removeAll(QString());
+        const QString first = words.first();
+
+        stream << line;
+
+        if(first!="transform" && first!="material") {
+            break;
+        }
+
+        QString attribute;
+        stream >> attribute;
+
+        if(attribute=="transform") {
+            stream >> *object.transformLocal;
+            object.update();
+        } else if(attribute=="material") {
+            stream >> *object.material;
+        }
+    }
+
+    return stream;
+}
+
 }

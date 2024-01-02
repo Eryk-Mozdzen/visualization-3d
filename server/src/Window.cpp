@@ -60,8 +60,6 @@ gs::Object * Window::findLeaf(QList<QString> tree) {
 }
 
 void Window::receive(QString line) {
-    //qDebug() << line;
-
     QTextStream stream(&line);
 
     QString command;
@@ -79,6 +77,7 @@ void Window::receive(QString line) {
         stream >> name >> type;
 
         QList<QString> tree = name.split('.');
+        name = tree.back();
         tree.pop_back();
 
         gs::Object *parent = findLeaf(tree);
@@ -109,5 +108,13 @@ void Window::receive(QString line) {
 
         const QList<QString> tree = name.split('.');
 
+        gs::Object *object = findLeaf(tree);
+
+        if(object==nullptr) {
+            qDebug() << "object does not exist";
+            return;
+        }
+
+        stream >> *object;
     }
 }

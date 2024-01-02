@@ -31,6 +31,8 @@ public:
     Material * getMaterial() const;
     Transform * getTransformGlobal() const;
     Transform * getTransformLocal() const;
+
+    friend QTextStream & operator>>(QTextStream &stream, Object &object);
 };
 
 }

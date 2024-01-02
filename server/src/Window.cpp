@@ -1,7 +1,3 @@
-#include <sstream>
-
-#include <QTimer>
-
 #include "Window.h"
 #include "Ground.h"
 #include "Sphere.h"

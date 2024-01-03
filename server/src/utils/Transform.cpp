@@ -21,9 +21,9 @@ QTextStream & operator>>(QTextStream &stream, Transform &transform) {
         if(attribute=="rotation") {
             float roll, pitch, yaw;
             stream >> roll >> pitch >> yaw;
-            transform.setRotationX(roll);
-            transform.setRotationY(pitch);
-            transform.setRotationZ(yaw);
+            transform.setRotationX(Transform::rad2deg*roll);
+            transform.setRotationY(Transform::rad2deg*pitch);
+            transform.setRotationZ(Transform::rad2deg*yaw);
         } else if(attribute=="translation") {
             float x, y, z;
             stream >> x >> y >> z;
@@ -40,7 +40,7 @@ QTextStream & operator>>(QTextStream &stream, Transform &transform) {
 
 QDebug operator<<(QDebug stream, const Transform &transform) {
 
-    stream << transform.rotationX() << transform.rotationY() << transform.rotationZ();
+    stream << Transform::deg2rad*transform.rotationX() << Transform::deg2rad*transform.rotationY() << Transform::deg2rad*transform.rotationZ();
     stream << transform.translation().x() << transform.translation().y() << transform.translation().z();
     stream << transform.scale3D().x() << transform.scale3D().y() << transform.scale3D().z();
 

@@ -15,7 +15,7 @@ void CameraController::moveCamera(const InputState &state, float dt) {
     }
 
     if(state.rightMouseButtonActive) {
-        const QVector3D up(0, 1, 0);
+        const QVector3D up(0, 0, 1);
 
         camera->panAboutViewCenter(-(state.rxAxisValue + last.rxAxisValue)*0.5*dt*300, up);
         camera->tiltAboutViewCenter(-(state.ryAxisValue + last.ryAxisValue)*0.5*dt*300);

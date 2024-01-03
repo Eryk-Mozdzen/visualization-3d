@@ -18,8 +18,9 @@ Window::Window() {
     (void)ground;
 
     Qt3DRender::QCamera *camera = this->camera();
+    camera->rotate(QQuaternion::fromAxisAndAngle(QVector3D(1, 0, 0), 90));
     camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
-    camera->setPosition(QVector3D(20, 10, 20));
+    camera->setPosition(QVector3D(2, 2, 1));
     camera->setViewCenter(QVector3D(0, 0, 0));
 
     gs::CameraController *controller = new gs::CameraController(root);

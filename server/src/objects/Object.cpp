@@ -38,7 +38,7 @@ Object::Object(Qt3DCore::QEntity *root, QTextStream &stream) : parent{nullptr} {
 
 Object::~Object() {
     for(Object *child : childs) {
-        child->entity->deleteLater();
+        delete child;
     }
 
     entity->deleteLater();

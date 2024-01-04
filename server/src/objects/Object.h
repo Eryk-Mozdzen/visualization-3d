@@ -19,9 +19,8 @@ protected:
     Object *parent;
     QMap<QString, Object *> childs;
 
-    Object(Qt3DCore::QEntity *root, QTextStream &stream);
-
 public:
+    Object(Qt3DCore::QEntity *root, QTextStream &stream);
     ~Object();
 
     void addChild(const QString name, Object *child);

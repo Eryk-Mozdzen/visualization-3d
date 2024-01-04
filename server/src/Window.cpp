@@ -88,6 +88,8 @@ void Window::receive(QString line) {
             child = new gs::Cylinder(root, stream);
         } else if(type=="model") {
             child = new gs::Model(root, stream);
+        } else if(type=="empty") {
+            child = new gs::Object(root, stream);
         } else {
             qDebug() << "unknown object type";
             return;

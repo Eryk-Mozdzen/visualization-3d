@@ -11,8 +11,7 @@ int main() {
 	client.write("clear\n");
 	client.write("create obj1      sphere   material color 255 0   0   transform scale 0.1 0.1 0.1\n");
 	client.write("create obj2      cylinder material color 0   255 0   transform scale 0.1 0.1 0.1\n");
-	client.write("create obj3      cuboid   material color 0   0   255 transform scale 0.1 0.1 0.1 translation 0 0 1\n");
-	client.write("create obj1.obj4 model    material color 255 0   255 transform scale 0.1 0.1 0.1 translation 10 0 0 path /home/emozdzen/Downloads/3DBenchy.stl\n");
+	client.write("create obj1.obj3 cuboid   material color 255 0   255 transform translation 10 0 0\n");
 
 	float t = 0;
 
@@ -30,8 +29,8 @@ int main() {
 
 		{
 			std::stringstream ss;
-			ss << "update obj1.obj4 ";
-			ss << "transform rotation 0 0 " << t;
+			ss << "update obj1.obj3 ";
+			ss << "transform rotation 0 0 " << t*180/3.14;
 			ss << "\n";
 
 			client.write(ss.str());

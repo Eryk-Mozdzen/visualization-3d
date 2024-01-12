@@ -20,13 +20,13 @@ add_executable(${PROJECT_NAME}
 	"src/CameraController.cpp"
 	"src/Server.cpp"
 
-	"src/objects/Object.cpp"
 	"src/objects/Ground.cpp"
 	"src/objects/Sphere.cpp"
 	"src/objects/Cylinder.cpp"
 	"src/objects/Cuboid.cpp"
 	"src/objects/Model.cpp"
 
+	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"
 	"src/utils/Transform.cpp"
 )

@@ -2,26 +2,20 @@
 
 namespace gs {
 
-Model::Model(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
-
-    QString attribute;
-    stream >> attribute;
-
-    if(attribute!="path") {
-        qDebug() << "model need path to mesh file, attribute:" << attribute;
-        return;
-    }
-
-    QString path;
-    stream >> path;
-
-    if(path.isEmpty()) {
-        qDebug() << "model path empty";
-        return;
-    }
+Model::Model(ArgumentStream &stream) : Object(stream) {
 
     Qt3DRender::QMesh *mesh = new Qt3DRender::QMesh();
-    mesh->setSource(QUrl::fromLocalFile(path));
+
+    if(stream.fetch("path")) {
+        QString path;
+        stream >> path;
+
+        mesh->setSource(QUrl::fromLocalFile(path));
+
+    } else {
+        qDebug() << "model need path to mesh file";
+        return;
+    }
 
     entity->addComponent(mesh);
 }

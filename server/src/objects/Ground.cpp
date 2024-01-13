@@ -2,13 +2,13 @@
 
 namespace gs {
 
-Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
+Ground::Ground(ArgumentStream &stream) : Object(stream) {
 
     constexpr int num = 1000;
 
     {
-        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(root);
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(root);
+        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
+        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
 
         Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
         QByteArray vertexBufferData;
@@ -54,8 +54,8 @@ Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stre
     }
 
     {
-        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(root);
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(root);
+        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
+        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
 
         Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
         QByteArray vertexBufferData;
@@ -83,7 +83,7 @@ Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stre
         renderer->setGeometry(geometry);
         renderer->setPrimitiveType(Qt3DRender::QGeometryRenderer::Lines);
 
-        Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(root);
+        Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(Object::getRoot());
         Qt3DExtras::QPhongMaterial *material = new Qt3DExtras::QPhongMaterial();
 
         material->setAmbient(Qt::darkRed);
@@ -93,8 +93,8 @@ Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stre
     }
 
     {
-        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(root);
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(root);
+        Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
+        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
 
         Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
         QByteArray vertexBufferData;
@@ -122,7 +122,7 @@ Ground::Ground(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stre
         renderer->setGeometry(geometry);
         renderer->setPrimitiveType(Qt3DRender::QGeometryRenderer::Lines);
 
-        Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(root);
+        Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(Object::getRoot());
         Qt3DExtras::QPhongMaterial *material = new Qt3DExtras::QPhongMaterial();
 
         material->setAmbient(Qt::darkGreen);

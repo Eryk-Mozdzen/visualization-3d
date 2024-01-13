@@ -2,7 +2,9 @@
 
 namespace gs {
 
-Object::Object(Qt3DCore::QEntity *root, QTextStream &stream) : parent{nullptr} {
+Qt3DCore::QEntity *Object::root = new Qt3DCore::QEntity();
+
+Object::Object(ArgumentStream &stream) : parent{nullptr} {
     entity = new Qt3DCore::QEntity(root);
 
     material = new Material();
@@ -12,27 +14,13 @@ Object::Object(Qt3DCore::QEntity *root, QTextStream &stream) : parent{nullptr} {
     entity->addComponent(material);
     entity->addComponent(transformGlobal);
 
-    while(!stream.atEnd()) {
-        const QString line = stream.readAll();
-        QList<QString> words = line.split(' ');
-        words.removeAll(QString());
-        const QString first = words.first();
+    if(stream.fetch("transform")) {
+        stream >> *transformLocal;
+        update();
+    }
 
-        stream << line;
-
-        if(first!="transform" && first!="material") {
-            break;
-        }
-
-        QString attribute;
-        stream >> attribute;
-
-        if(attribute=="transform") {
-            stream >> *transformLocal;
-            update();
-        } else if(attribute=="material") {
-            stream >> *material;
-        }
+    if(stream.fetch("material")) {
+        stream >> *material;
     }
 }
 
@@ -81,29 +69,19 @@ Transform * Object::getTransformLocal() const {
     return transformLocal;
 }
 
-QTextStream & operator>>(QTextStream &stream, Object &object) {
+Qt3DCore::QEntity * Object::getRoot() {
+    return Object::root;
+}
 
-    while(!stream.atEnd()) {
-        const QString line = stream.readAll();
-        QList<QString> words = line.split(' ');
-        words.removeAll(QString());
-        const QString first = words.first();
+ArgumentStream & operator>>(ArgumentStream &stream, Object &object) {
 
-        stream << line;
+    if(stream.fetch("transform")) {
+        stream >> *object.transformLocal;
+        object.update();
+    }
 
-        if(first!="transform" && first!="material") {
-            break;
-        }
-
-        QString attribute;
-        stream >> attribute;
-
-        if(attribute=="transform") {
-            stream >> *object.transformLocal;
-            object.update();
-        } else if(attribute=="material") {
-            stream >> *object.material;
-        }
+    if(stream.fetch("material")) {
+        stream >> *object.material;
     }
 
     return stream;

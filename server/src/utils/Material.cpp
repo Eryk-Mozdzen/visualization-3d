@@ -12,15 +12,15 @@ void Material::setColor(int r, int g, int b) {
     setDiffuse(QColor(r, g, b));
 }
 
-QTextStream & operator>>(QTextStream &stream, Material &material) {
-    QString attribute;
-    stream >> attribute;
+ArgumentStream & operator>>(ArgumentStream &stream, Material &material) {
 
-    int r, g, b;
-    stream >> r >> g >> b;
+    if(stream.fetch("color")) {
+        int r, g, b;
+        stream >> r >> g >> b;
 
-    material.setAmbient(QColor(128, 128, 128));
-    material.setDiffuse(QColor(r, g, b));
+        material.setAmbient(QColor(128, 128, 128));
+        material.setDiffuse(QColor(r, g, b));
+    }
 
     return stream;
 }

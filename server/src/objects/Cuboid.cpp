@@ -2,7 +2,7 @@
 
 namespace gs {
 
-Cuboid::Cuboid(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
+Cuboid::Cuboid(ArgumentStream &stream) : Object(stream) {
 
     Qt3DExtras::QCuboidMesh *mesh = new Qt3DExtras::QCuboidMesh();
 

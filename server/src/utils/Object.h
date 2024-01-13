@@ -6,10 +6,13 @@
 
 #include "Material.h"
 #include "Transform.h"
+#include "ArgumentStream.h"
 
 namespace gs {
 
 class Object {
+    static Qt3DCore::QEntity *root;
+
 protected:
     Qt3DCore::QEntity *entity;
     Material *material;
@@ -20,7 +23,7 @@ protected:
     QMap<QString, Object *> childs;
 
 public:
-    Object(Qt3DCore::QEntity *root, QTextStream &stream);
+    Object(ArgumentStream &stream);
     ~Object();
 
     void addChild(const QString name, Object *child);
@@ -31,7 +34,9 @@ public:
     Transform * getTransformGlobal() const;
     Transform * getTransformLocal() const;
 
-    friend QTextStream & operator>>(QTextStream &stream, Object &object);
+    static Qt3DCore::QEntity * getRoot();
+
+    friend ArgumentStream & operator>>(ArgumentStream &stream, Object &object);
 };
 
 }

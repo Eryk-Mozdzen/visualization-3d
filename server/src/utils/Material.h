@@ -2,6 +2,8 @@
 
 #include <Qt3DExtras>
 
+#include "ArgumentStream.h"
+
 namespace gs {
 
 class Material : public Qt3DExtras::QPhongMaterial {
@@ -10,7 +12,7 @@ public:
 
     void setColor(int r, int g, int b);
 
-    friend QTextStream & operator>>(QTextStream &stream, Material &material);
+    friend ArgumentStream & operator>>(ArgumentStream &stream, Material &material);
     friend QDebug operator<<(QDebug stream, const Material &material);
 };
 

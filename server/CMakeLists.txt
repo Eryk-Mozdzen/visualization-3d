@@ -6,9 +6,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS
-	Widgets
 	Core
-	Gui
+	Widgets
+	Network
 	3DCore
 	3DRender
 	3DExtras
@@ -29,6 +29,7 @@ add_executable(${PROJECT_NAME}
 	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"
 	"src/utils/Transform.cpp"
+	"src/utils/ArgumentStream.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -44,9 +45,9 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME}
-	Qt5::Widgets
 	Qt5::Core
-	Qt5::Gui
+	Qt5::Widgets
+	Qt5::Network
 	Qt5::3DCore
 	Qt5::3DRender
 	Qt5::3DExtras

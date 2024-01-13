@@ -5,29 +5,26 @@
 #include "Cuboid.h"
 #include "Model.h"
 #include "CameraController.h"
+#include "ArgumentStream.h"
 
 Window::Window() {
-
     setTitle("3D Visualization Server");
 
-    root = new Qt3DCore::QEntity;
-
-    QString str;
-    QTextStream stream(&str);
-    gs::Object *ground = new gs::Ground(root, stream);
+    gs::ArgumentStream stream;
+    gs::Object *ground = new gs::Ground(stream);
     (void)ground;
 
     Qt3DRender::QCamera *camera = this->camera();
     camera->rotate(QQuaternion::fromAxisAndAngle(QVector3D(1, 0, 0), 90));
     camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
-    camera->setPosition(QVector3D(2, 2, 1));
+    camera->setPosition(QVector3D(0, -4, 2));
     camera->setViewCenter(QVector3D(0, 0, 0));
 
-    gs::CameraController *controller = new gs::CameraController(root);
+    gs::CameraController *controller = new gs::CameraController(gs::Object::getRoot());
     controller->setCamera(camera);
 
     defaultFrameGraph()->setClearColor(Qt::black);
-    setRootEntity(root);
+    setRootEntity(gs::Object::getRoot());
 
     connect(&server, &gs::Server::receive, this, &Window::receive);
 }
@@ -57,18 +54,17 @@ gs::Object * Window::findLeaf(QList<QString> tree) {
 }
 
 void Window::receive(QString line) {
-    QTextStream stream(&line);
+    gs::ArgumentStream stream(line);
 
-    QString command;
-    stream >> command;
-
-    if(command=="clear") {
+    if(stream.fetch("clear")) {
         QMap<QString, gs::Object *>::iterator it = objects.begin();
         while(it!=objects.end()) {
             delete it.value();
             it = objects.erase(it);
         }
-    } else if(command=="create") {
+    }
+
+    if(stream.fetch("create")) {
         QString name;
         QString type;
         stream >> name >> type;
@@ -81,17 +77,17 @@ void Window::receive(QString line) {
         gs::Object *child = nullptr;
 
         if(type=="cuboid") {
-            child = new gs::Cuboid(root, stream);
+            child = new gs::Cuboid(stream);
         } else if(type=="sphere") {
-            child = new gs::Sphere(root, stream);
+            child = new gs::Sphere(stream);
         } else if(type=="cylinder") {
-            child = new gs::Cylinder(root, stream);
+            child = new gs::Cylinder(stream);
         } else if(type=="model") {
-            child = new gs::Model(root, stream);
+            child = new gs::Model(stream);
         } else if(type=="empty") {
-            child = new gs::Object(root, stream);
+            child = new gs::Object(stream);
         } else {
-            qDebug() << "unknown object type";
+            qDebug() << "unknown object type:" << type;
             return;
         }
 
@@ -100,8 +96,9 @@ void Window::receive(QString line) {
         } else {
             parent->addChild(name, child);
         }
+    }
 
-    } else if(command=="update") {
+    if(stream.fetch("update")) {
         QString name;
         stream >> name;
 

@@ -2,7 +2,7 @@
 
 namespace gs {
 
-Sphere::Sphere(Qt3DCore::QEntity *root, QTextStream &stream) : Object(root, stream) {
+Sphere::Sphere(ArgumentStream &stream) : Object(stream) {
 
     Qt3DExtras::QSphereMesh *mesh = new Qt3DExtras::QSphereMesh();
     mesh->setRadius(1);

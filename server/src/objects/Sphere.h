@@ -6,7 +6,7 @@ namespace gs {
 
 class Sphere : public Object {
 public:
-    Sphere(Qt3DCore::QEntity *root, QTextStream &stream);
+    Sphere(ArgumentStream &stream);
 };
 
 }

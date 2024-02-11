@@ -3,7 +3,7 @@
 namespace gs {
 
 Server::Server(QObject *parent) : QTcpServer(parent) {
-    if(!this->listen(QHostAddress::Any, Server::port)) {
+    if(!this->listen(QHostAddress::LocalHost, Server::port)) {
         qDebug() << "server could not start";
     }
 }

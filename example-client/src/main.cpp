@@ -30,7 +30,7 @@ int main() {
 		{
 			std::stringstream ss;
 			ss << "update obj1.obj3 ";
-			ss << "transform rotation 0 0 " << t*180/3.14;
+			ss << "transform rpy 0 0 " << t*180/3.14;
 			ss << "\n";
 
 			client.write(ss.str());

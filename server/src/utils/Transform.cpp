@@ -4,7 +4,7 @@ namespace gs {
 
 ArgumentStream & operator>>(ArgumentStream &stream, Transform &transform) {
 
-    if(stream.fetch("rotation")) {
+    if(stream.fetch("rpy")) {
         float roll, pitch, yaw;
         stream >> roll >> pitch >> yaw;
 
@@ -24,6 +24,12 @@ ArgumentStream & operator>>(ArgumentStream &stream, Transform &transform) {
         const float y = cosRollHalf * sinPitchHalf * cosYawHalf + sinRollHalf * cosPitchHalf * sinYawHalf;
         const float z = cosRollHalf * cosPitchHalf * sinYawHalf - sinRollHalf * sinPitchHalf * cosYawHalf;
 
+        transform.setRotation(QQuaternion(w, x, y, z));
+    }
+
+    if(stream.fetch("quaternion")) {
+        float w, x, y, z;
+        stream >> w >> x >> y >> z;
         transform.setRotation(QQuaternion(w, x, y, z));
     }
 

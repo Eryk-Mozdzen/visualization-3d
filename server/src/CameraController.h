@@ -18,6 +18,8 @@ protected:
 
 public:
     explicit CameraController(Qt3DCore::QNode *parent = nullptr);
+
+    void setCenter(const QVector3D center);
 };
 
 }

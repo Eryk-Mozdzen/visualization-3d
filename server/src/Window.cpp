@@ -19,7 +19,7 @@ Window::Window() {
     camera->setPosition(QVector3D(0, -4, 2));
     camera->setViewCenter(QVector3D(0, 0, 0));
 
-    gs::CameraController *controller = new gs::CameraController(gs::Object::getRoot());
+    controller = new gs::CameraController(gs::Object::getRoot());
     controller->setCamera(camera);
 
     defaultFrameGraph()->setClearColor(Qt::black);
@@ -124,5 +124,12 @@ void Window::receive(QString line) {
         }
 
         stream >> *object;
+    }
+
+    if(stream.fetch("camera")) {
+        float x, y, z;
+        stream >> x >> y >> z;
+
+        controller->setCenter(QVector3D(x, y, z));
     }
 }

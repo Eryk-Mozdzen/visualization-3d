@@ -38,4 +38,12 @@ void CameraController::moveCamera(const InputState &state, float dt) {
     last = state;
 }
 
+void CameraController::setCenter(const QVector3D center) {
+    Qt3DRender::QCamera *camera = this->camera();
+
+    const QVector3D delta = center - camera->viewCenter();
+
+    camera->translateWorld(delta);
+}
+
 }

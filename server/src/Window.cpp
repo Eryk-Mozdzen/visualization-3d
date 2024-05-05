@@ -11,8 +11,7 @@ Window::Window() {
     setTitle("3D Visualization Server");
 
     gs::ArgumentStream stream;
-    gs::Object *ground = new gs::Ground(stream);
-    (void)ground;
+    ground = new gs::Ground(stream);
 
     Qt3DRender::QCamera *camera = this->camera();
     camera->rotate(QQuaternion::fromAxisAndAngle(QVector3D(1, 0, 0), 90));
@@ -55,6 +54,19 @@ gs::Object * Window::findLeaf(QList<QString> tree) {
 
 void Window::receive(QString line) {
     gs::ArgumentStream stream(line);
+
+    if(stream.fetch("mode")) {
+        QString mode;
+        stream >> mode;
+
+        if(mode=="light") {
+            defaultFrameGraph()->setClearColor(Qt::white);
+            ground->setColors(QColor(220, 220, 220), Qt::red, Qt::green);
+        } else if(mode=="dark") {
+            defaultFrameGraph()->setClearColor(Qt::black);
+            ground->setColors(QColor(128, 128, 128), Qt::darkRed, Qt::darkGreen);
+        }
+    }
 
     if(stream.fetch("clear")) {
         QMap<QString, gs::Object *>::iterator it = objects.begin();

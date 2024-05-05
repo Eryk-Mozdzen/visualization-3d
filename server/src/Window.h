@@ -7,11 +7,13 @@
 
 #include "Object.h"
 #include "Server.h"
+#include "Ground.h"
 
 class Window : public Qt3DExtras::Qt3DWindow {
     Q_OBJECT
 
     QMap<QString, gs::Object *> objects;
+    gs::Ground *ground;
 
     gs::Server server;
 

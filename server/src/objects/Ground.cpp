@@ -84,11 +84,11 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
         renderer->setPrimitiveType(Qt3DRender::QGeometryRenderer::Lines);
 
         Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(Object::getRoot());
-        Qt3DExtras::QPhongMaterial *material = new Qt3DExtras::QPhongMaterial();
+        material_x = new Qt3DExtras::QPhongMaterial();
 
-        material->setAmbient(Qt::darkRed);
+        material_x->setAmbient(Qt::darkRed);
 
-        axis->addComponent(material);
+        axis->addComponent(material_x);
         axis->addComponent(renderer);
     }
 
@@ -123,13 +123,25 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
         renderer->setPrimitiveType(Qt3DRender::QGeometryRenderer::Lines);
 
         Qt3DCore::QEntity *axis = new Qt3DCore::QEntity(Object::getRoot());
-        Qt3DExtras::QPhongMaterial *material = new Qt3DExtras::QPhongMaterial();
+        material_y = new Qt3DExtras::QPhongMaterial();
 
-        material->setAmbient(Qt::darkGreen);
+        material_y->setAmbient(Qt::darkGreen);
 
-        axis->addComponent(material);
+        axis->addComponent(material_y);
         axis->addComponent(renderer);
     }
+
+    setColors(QColor(128, 128, 128), Qt::darkRed, Qt::darkGreen);
+}
+
+void Ground::setColors(const QColor grid, const QColor x, const QColor y) {
+    material->setDiffuse(grid);
+    material_x->setDiffuse(x);
+    material_y->setDiffuse(y);
+
+    material->setAmbient(grid);
+    material_x->setAmbient(x);
+    material_y->setAmbient(y);
 }
 
 }

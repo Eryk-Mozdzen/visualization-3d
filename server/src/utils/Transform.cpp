@@ -39,12 +39,6 @@ ArgumentStream & operator>>(ArgumentStream &stream, Transform &transform) {
         transform.setTranslation(QVector3D(x, y, z));
     }
 
-    if(stream.fetch("scale")) {
-        float x, y, z;
-        stream >> x >> y >> z;
-        transform.setScale3D(QVector3D(x, y, z));
-    }
-
     return stream;
 }
 
@@ -52,7 +46,6 @@ QDebug operator<<(QDebug stream, const Transform &transform) {
 
     stream << transform.rotationX() << transform.rotationY() << transform.rotationZ();
     stream << transform.translation().x() << transform.translation().y() << transform.translation().z();
-    stream << transform.scale3D().x() << transform.scale3D().y() << transform.scale3D().z();
 
     return stream;
 }

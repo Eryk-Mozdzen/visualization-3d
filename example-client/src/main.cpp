@@ -8,11 +8,10 @@ int main() {
 
 	Client client;
 
-	client.write("mode light\n");
 	client.write("clear\n");
-	client.write("create obj1      sphere   material color 255 0   0   transform scale 0.1 0.1 0.1\n");
-	client.write("create obj2      cylinder material color 0   255 0   transform scale 0.1 0.1 0.1\n");
-	client.write("create obj1.obj3 cuboid   material color 255 0   255 transform translation 10 0 0\n");
+	client.write("create obj1      sphere   material color 255 0   0   transform geometry 0.1\n");
+	client.write("create obj2      cylinder material color 0   255 0   transform geometry 0.1 0.1\n");
+	client.write("create obj1.obj3 cuboid   material color 255 0   255 transform translation 1 0 0 geometry 0.1 0.1 0.1\n");
 
 	float t = 0;
 

@@ -5,7 +5,7 @@ project(server)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS
+find_package(Qt6 COMPONENTS
 	Core
 	Widgets
 	Network
@@ -45,10 +45,10 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME}
-	Qt5::Core
-	Qt5::Widgets
-	Qt5::Network
-	Qt5::3DCore
-	Qt5::3DRender
-	Qt5::3DExtras
+	Qt6::Core
+	Qt6::Widgets
+	Qt6::Network
+	Qt6::3DCore
+	Qt6::3DRender
+	Qt6::3DExtras
 )

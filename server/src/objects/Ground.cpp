@@ -8,9 +8,9 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
 
     {
         Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
+        Qt3DCore::QGeometry *geometry = new Qt3DCore::QGeometry(Object::getRoot());
 
-        Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
+        Qt3DCore::QBuffer *vertexBuffer = new Qt3DCore::QBuffer(geometry);
         QByteArray vertexBufferData;
         vertexBufferData.resize(4*num * 3 * sizeof(float));
         float *rawVertexArray = reinterpret_cast<float*>(vertexBufferData.data());
@@ -36,11 +36,11 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
         }
         vertexBuffer->setData(vertexBufferData);
 
-        Qt3DRender::QAttribute *positionAttribute = new Qt3DRender::QAttribute();
-        positionAttribute->setName(Qt3DRender::QAttribute::defaultPositionAttributeName());
-        positionAttribute->setVertexBaseType(Qt3DRender::QAttribute::Float);
+        Qt3DCore::QAttribute *positionAttribute = new Qt3DCore::QAttribute();
+        positionAttribute->setName(Qt3DCore::QAttribute::defaultPositionAttributeName());
+        positionAttribute->setVertexBaseType(Qt3DCore::QAttribute::Float);
         positionAttribute->setVertexSize(3);
-        positionAttribute->setAttributeType(Qt3DRender::QAttribute::VertexAttribute);
+        positionAttribute->setAttributeType(Qt3DCore::QAttribute::VertexAttribute);
         positionAttribute->setBuffer(vertexBuffer);
         positionAttribute->setByteOffset(0);
         positionAttribute->setByteStride(3 * sizeof(float));
@@ -55,9 +55,9 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
 
     {
         Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
+        Qt3DCore::QGeometry *geometry = new Qt3DCore::QGeometry(Object::getRoot());
 
-        Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
+        Qt3DCore::QBuffer *vertexBuffer = new Qt3DCore::QBuffer(geometry);
         QByteArray vertexBufferData;
         vertexBufferData.resize(6 * sizeof(float));
         float *rawVertexArray = reinterpret_cast<float*>(vertexBufferData.data());
@@ -69,11 +69,11 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
         *rawVertexArray++ = 0;
         vertexBuffer->setData(vertexBufferData);
 
-        Qt3DRender::QAttribute *positionAttribute = new Qt3DRender::QAttribute();
-        positionAttribute->setName(Qt3DRender::QAttribute::defaultPositionAttributeName());
-        positionAttribute->setVertexBaseType(Qt3DRender::QAttribute::Float);
+        Qt3DCore::QAttribute *positionAttribute = new Qt3DCore::QAttribute();
+        positionAttribute->setName(Qt3DCore::QAttribute::defaultPositionAttributeName());
+        positionAttribute->setVertexBaseType(Qt3DCore::QAttribute::Float);
         positionAttribute->setVertexSize(3);
-        positionAttribute->setAttributeType(Qt3DRender::QAttribute::VertexAttribute);
+        positionAttribute->setAttributeType(Qt3DCore::QAttribute::VertexAttribute);
         positionAttribute->setBuffer(vertexBuffer);
         positionAttribute->setByteOffset(0);
         positionAttribute->setByteStride(3 * sizeof(float));
@@ -94,9 +94,9 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
 
     {
         Qt3DRender::QGeometryRenderer *renderer = new Qt3DRender::QGeometryRenderer(Object::getRoot());
-        Qt3DRender::QGeometry *geometry = new Qt3DRender::QGeometry(Object::getRoot());
+        Qt3DCore::QGeometry *geometry = new Qt3DCore::QGeometry(Object::getRoot());
 
-        Qt3DRender::QBuffer *vertexBuffer = new Qt3DRender::QBuffer(geometry);
+        Qt3DCore::QBuffer *vertexBuffer = new Qt3DCore::QBuffer(geometry);
         QByteArray vertexBufferData;
         vertexBufferData.resize(6 * sizeof(float));
         float *rawVertexArray = reinterpret_cast<float*>(vertexBufferData.data());
@@ -108,11 +108,11 @@ Ground::Ground(ArgumentStream &stream) : Object(stream) {
         *rawVertexArray++ = 0;
         vertexBuffer->setData(vertexBufferData);
 
-        Qt3DRender::QAttribute *positionAttribute = new Qt3DRender::QAttribute();
-        positionAttribute->setName(Qt3DRender::QAttribute::defaultPositionAttributeName());
-        positionAttribute->setVertexBaseType(Qt3DRender::QAttribute::Float);
+        Qt3DCore::QAttribute *positionAttribute = new Qt3DCore::QAttribute();
+        positionAttribute->setName(Qt3DCore::QAttribute::defaultPositionAttributeName());
+        positionAttribute->setVertexBaseType(Qt3DCore::QAttribute::Float);
         positionAttribute->setVertexSize(3);
-        positionAttribute->setAttributeType(Qt3DRender::QAttribute::VertexAttribute);
+        positionAttribute->setAttributeType(Qt3DCore::QAttribute::VertexAttribute);
         positionAttribute->setBuffer(vertexBuffer);
         positionAttribute->setByteOffset(0);
         positionAttribute->setByteStride(3 * sizeof(float));

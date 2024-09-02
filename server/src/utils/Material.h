@@ -2,9 +2,9 @@
 
 #include <Qt3DExtras>
 
-#include "ArgumentStream.h"
+#include "utils/ArgumentStream.h"
 
-namespace gs {
+namespace utils {
 
 class Material : public Qt3DExtras::QPhongMaterial {
 public:

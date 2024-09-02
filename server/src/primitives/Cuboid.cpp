@@ -1,9 +1,8 @@
 #include "Cuboid.h"
 
-namespace gs {
+namespace primitives {
 
-Cuboid::Cuboid(ArgumentStream &stream) : Object(stream) {
-
+Cuboid::Cuboid(utils::ArgumentStream &stream) : Object{stream} {
     Qt3DExtras::QCuboidMesh *mesh = new Qt3DExtras::QCuboidMesh();
 
     if(stream.fetch("geometry")) {

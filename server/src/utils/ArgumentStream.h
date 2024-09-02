@@ -2,7 +2,7 @@
 
 #include <QList>
 
-namespace gs {
+namespace utils {
 
 class ArgumentStream {
     QList<QString> args;

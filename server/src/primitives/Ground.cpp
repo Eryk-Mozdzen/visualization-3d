@@ -1,9 +1,8 @@
 #include "Ground.h"
 
-namespace gs {
+namespace primitives {
 
-Ground::Ground(ArgumentStream &stream) : Object(stream) {
-
+Ground::Ground(utils::ArgumentStream &stream) : Object{stream} {
     constexpr int num = 1000;
 
     {

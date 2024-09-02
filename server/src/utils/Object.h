@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QtWidgets>
 #include <Qt3DExtras>
 #include <Qt3DRender>
 
-#include "Material.h"
-#include "Transform.h"
-#include "ArgumentStream.h"
+#include "utils/Material.h"
+#include "utils/Transform.h"
+#include "utils/ArgumentStream.h"
 
-namespace gs {
+namespace utils {
 
 class Object {
     static Qt3DCore::QEntity *root;

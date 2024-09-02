@@ -1,9 +1,8 @@
 #include "Sphere.h"
 
-namespace gs {
+namespace primitives {
 
-Sphere::Sphere(ArgumentStream &stream) : Object(stream) {
-
+Sphere::Sphere(utils::ArgumentStream &stream) : Object{stream} {
     Qt3DExtras::QSphereMesh *mesh = new Qt3DExtras::QSphereMesh();
 	mesh->setRings(100);
     mesh->setSlices(100);

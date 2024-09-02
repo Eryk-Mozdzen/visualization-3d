@@ -1,9 +1,10 @@
+#include <QTcpServer>
+#include <QTcpSocket>
+
 #include "Server.h"
 
-namespace gs {
-
-Server::Server(QObject *parent) : QTcpServer(parent) {
-    if(!this->listen(QHostAddress::LocalHost, Server::port)) {
+Server::Server(QObject *parent) : QTcpServer{parent} {
+    if(!this->listen(QHostAddress::LocalHost, 8080)) {
         qDebug() << "server could not start";
     }
 }
@@ -28,6 +29,4 @@ void Server::incomingConnection(qintptr socketDescriptor) {
     } else {
         socket->deleteLater();
     }
-}
-
 }

@@ -1,6 +1,12 @@
-#include "Object.h"
+#include <Qt3DExtras>
+#include <Qt3DRender>
 
-namespace gs {
+#include "Object.h"
+#include "utils/Material.h"
+#include "utils/Transform.h"
+#include "utils/ArgumentStream.h"
+
+namespace utils {
 
 Qt3DCore::QEntity *Object::root = new Qt3DCore::QEntity();
 

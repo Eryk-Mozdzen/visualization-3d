@@ -1,39 +1,37 @@
 #include "Window.h"
-#include "Ground.h"
-#include "Sphere.h"
-#include "Cylinder.h"
-#include "Cuboid.h"
-#include "Model.h"
 #include "CameraController.h"
-#include "ArgumentStream.h"
+#include "utils/Object.h"
+#include "utils/ArgumentStream.h"
+#include "primitives/Ground.h"
+#include "primitives/Sphere.h"
+#include "primitives/Cylinder.h"
+#include "primitives/Cuboid.h"
+#include "primitives/Model.h"
 
-Window::Window() {
+Window::Window() : controller{utils::Object::getRoot()} {
     setTitle("3D Visualization Server");
+    defaultFrameGraph()->setClearColor(Qt::black);
+    setRootEntity(utils::Object::getRoot());
 
-    gs::ArgumentStream stream;
-    ground = new gs::Ground(stream);
+    connect(&server, &Server::receive, this, &Window::receive);
 
     Qt3DRender::QCamera *camera = this->camera();
     camera->rotate(QQuaternion::fromAxisAndAngle(QVector3D(1, 0, 0), 90));
     camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
     camera->setPosition(QVector3D(0, -4, 2));
     camera->setViewCenter(QVector3D(0, 0, 0));
+    controller.setCamera(camera);
 
-    controller = new gs::CameraController(gs::Object::getRoot());
-    controller->setCamera(camera);
-
-    defaultFrameGraph()->setClearColor(Qt::black);
-    setRootEntity(gs::Object::getRoot());
-
-    connect(&server, &gs::Server::receive, this, &Window::receive);
+    utils::ArgumentStream stream;
+    ground = new primitives::Ground(stream);
 }
 
-gs::Object * Window::findLeaf(QList<QString> tree) {
+utils::Object *Window::findLeaf(QList<QString> tree) {
     if(tree.isEmpty()) {
         return nullptr;
     }
 
-    gs::Object *leaf = objects.value(tree.front());
+    utils::Object *leaf = objects.value(tree.front());
 
     if(leaf==nullptr) {
         return nullptr;
@@ -53,7 +51,7 @@ gs::Object * Window::findLeaf(QList<QString> tree) {
 }
 
 void Window::receive(QString line) {
-    gs::ArgumentStream stream(line);
+    utils::ArgumentStream stream(line);
 
     if(stream.fetch("mode")) {
         QString mode;
@@ -69,7 +67,7 @@ void Window::receive(QString line) {
     }
 
     if(stream.fetch("clear")) {
-        QMap<QString, gs::Object *>::iterator it = objects.begin();
+        QMap<QString, utils::Object *>::iterator it = objects.begin();
         while(it!=objects.end()) {
             delete it.value();
             it = objects.erase(it);
@@ -85,19 +83,19 @@ void Window::receive(QString line) {
         name = tree.back();
         tree.pop_back();
 
-        gs::Object *parent = findLeaf(tree);
-        gs::Object *child = nullptr;
+        utils::Object *parent = findLeaf(tree);
+        utils::Object *child = nullptr;
 
         if(type=="cuboid") {
-            child = new gs::Cuboid(stream);
+            child = new primitives::Cuboid(stream);
         } else if(type=="sphere") {
-            child = new gs::Sphere(stream);
+            child = new primitives::Sphere(stream);
         } else if(type=="cylinder") {
-            child = new gs::Cylinder(stream);
+            child = new primitives::Cylinder(stream);
         } else if(type=="model") {
-            child = new gs::Model(stream);
+            child = new primitives::Model(stream);
         } else if(type=="empty") {
-            child = new gs::Object(stream);
+            child = new utils::Object(stream);
         } else {
             qDebug() << "unknown object type:" << type;
             return;
@@ -116,7 +114,7 @@ void Window::receive(QString line) {
 
         const QList<QString> tree = name.split('.');
 
-        gs::Object *object = findLeaf(tree);
+        utils::Object *object = findLeaf(tree);
 
         if(object==nullptr) {
             qDebug() << "object does not exist";
@@ -130,6 +128,6 @@ void Window::receive(QString line) {
         float x, y, z;
         stream >> x >> y >> z;
 
-        controller->setCenter(QVector3D(x, y, z));
+        controller.setCenter(QVector3D(x, y, z));
     }
 }

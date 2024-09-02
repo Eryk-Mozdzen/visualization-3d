@@ -1,7 +1,6 @@
 #include "ArgumentStream.h"
-#include <QDebug>
 
-namespace gs {
+namespace utils {
 
 ArgumentStream::ArgumentStream() {
 

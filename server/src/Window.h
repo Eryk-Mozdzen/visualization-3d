@@ -1,25 +1,22 @@
 #pragma once
 
-#include <QVector>
-#include <QtWidgets>
 #include <Qt3DExtras>
-#include <Qt3DRender>
 
-#include "Object.h"
 #include "Server.h"
-#include "Ground.h"
 #include "CameraController.h"
+#include "utils/Object.h"
+#include "primitives/Ground.h"
 
 class Window : public Qt3DExtras::Qt3DWindow {
     Q_OBJECT
 
-    QMap<QString, gs::Object *> objects;
-    gs::Ground *ground;
-    gs::CameraController *controller;
+    Server server;
+    CameraController controller;
 
-    gs::Server server;
+    primitives::Ground *ground;
+    QMap<QString, utils::Object *> objects;
 
-    gs::Object * findLeaf(QList<QString> tree);
+    utils::Object *findLeaf(QList<QString> tree);
 
 public slots:
     void receive(QString line);

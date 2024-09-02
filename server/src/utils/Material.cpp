@@ -1,6 +1,9 @@
-#include "Material.h"
+#include <Qt3DExtras>
 
-namespace gs {
+#include "Material.h"
+#include "utils/ArgumentStream.h"
+
+namespace utils {
 
 Material::Material() {
     setAmbient(QColor(128, 128, 128));

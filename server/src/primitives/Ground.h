@@ -2,16 +2,16 @@
 
 #include <Qt3DExtras>
 
-#include "Object.h"
+#include "utils/Object.h"
 
-namespace gs {
+namespace primitives {
 
-class Ground : public Object {
+class Ground : public utils::Object {
     Qt3DExtras::QPhongMaterial *material_x;
     Qt3DExtras::QPhongMaterial *material_y;
 
 public:
-    Ground(ArgumentStream &stream);
+    Ground(utils::ArgumentStream &stream);
 
     void setColors(const QColor grid, const QColor x, const QColor y);
 };

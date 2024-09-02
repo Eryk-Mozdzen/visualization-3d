@@ -2,9 +2,9 @@
 
 #include <Qt3DCore>
 
-#include "ArgumentStream.h"
+#include "utils/ArgumentStream.h"
 
-namespace gs {
+namespace utils {
 
 class Transform : public Qt3DCore::QTransform {
     static constexpr float deg2rad = 3.1415/180;

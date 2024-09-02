@@ -1,9 +1,12 @@
+#include <Qt3DExtras>
+#include <Qt3DCore>
+#include <Qt3DRender>
+#include <Qt3DInput>
+#include <QMouseEvent>
+
 #include "CameraController.h"
-#include <QDebug>
 
-namespace gs {
-
-CameraController::CameraController(Qt3DCore::QNode *parent) : Qt3DExtras::QAbstractCameraController(parent) {
+CameraController::CameraController(Qt3DCore::QNode *parent) : Qt3DExtras::QAbstractCameraController{parent} {
 
 }
 
@@ -44,6 +47,4 @@ void CameraController::setCenter(const QVector3D center) {
     const QVector3D delta = center - camera->viewCenter();
 
     camera->translateWorld(delta);
-}
-
 }

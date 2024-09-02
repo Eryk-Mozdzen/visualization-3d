@@ -20,25 +20,24 @@ add_executable(${PROJECT_NAME}
 	"src/CameraController.cpp"
 	"src/Server.cpp"
 
-	"src/objects/Ground.cpp"
-	"src/objects/Sphere.cpp"
-	"src/objects/Cylinder.cpp"
-	"src/objects/Cuboid.cpp"
-	"src/objects/Model.cpp"
-
 	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"
 	"src/utils/Transform.cpp"
 	"src/utils/ArgumentStream.cpp"
+
+	"src/primitives/Ground.cpp"
+	"src/primitives/Sphere.cpp"
+	"src/primitives/Cylinder.cpp"
+	"src/primitives/Cuboid.cpp"
+	"src/primitives/Model.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
 	"src"
-	"src/objects"
-	"src/utils"
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
+	-O3
 	-Wall
 	-Wextra
 	-Wpedantic

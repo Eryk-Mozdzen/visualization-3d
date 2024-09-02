@@ -1,9 +1,8 @@
 #include "Cylinder.h"
 
-namespace gs {
+namespace primitives {
 
-Cylinder::Cylinder(ArgumentStream &stream) : Object(stream) {
-
+Cylinder::Cylinder(utils::ArgumentStream &stream) : Object{stream} {
     Qt3DExtras::QCylinderMesh *mesh = new Qt3DExtras::QCylinderMesh();
     mesh->setRings(100);
     mesh->setSlices(100);

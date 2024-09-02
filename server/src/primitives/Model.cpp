@@ -1,9 +1,8 @@
 #include "Model.h"
 
-namespace gs {
+namespace primitives {
 
-Model::Model(ArgumentStream &stream) : Object(stream) {
-
+Model::Model(utils::ArgumentStream &stream) : Object{stream} {
     Qt3DRender::QMesh *mesh = new Qt3DRender::QMesh();
 
     if(stream.fetch("geometry")) {

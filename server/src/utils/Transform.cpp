@@ -1,6 +1,9 @@
-#include "Transform.h"
+#include <Qt3DCore>
 
-namespace gs {
+#include "Transform.h"
+#include "utils/ArgumentStream.h"
+
+namespace utils {
 
 ArgumentStream & operator>>(ArgumentStream &stream, Transform &transform) {
 

@@ -1,4 +1,4 @@
-#include "Sphere.h"
+#include "primitives/Sphere.h"
 
 namespace primitives {
 

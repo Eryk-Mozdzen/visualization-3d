@@ -1,5 +1,6 @@
 #include "Window.h"
-#include "CameraController.h"
+#include "camera/Orbit.h"
+#include "camera/Planar.h"
 #include "utils/Object.h"
 #include "utils/ArgumentStream.h"
 #include "primitives/Ground.h"
@@ -7,20 +8,15 @@
 #include "primitives/Cylinder.h"
 #include "primitives/Cuboid.h"
 #include "primitives/Model.h"
+#include "primitives/Empty.h"
 
-Window::Window() : controller{utils::Object::getRoot()} {
+Window::Window() {
     setTitle("3D Visualization Server");
     defaultFrameGraph()->setClearColor(Qt::black);
     setRootEntity(utils::Object::getRoot());
 
-    connect(&server, &Server::receive, this, &Window::receive);
-
-    Qt3DRender::QCamera *camera = this->camera();
-    camera->rotate(QQuaternion::fromAxisAndAngle(QVector3D(1, 0, 0), 90));
-    camera->lens()->setPerspectiveProjection(45, width()/height(), 0.1, 1000);
-    camera->setPosition(QVector3D(0, -4, 2));
-    camera->setViewCenter(QVector3D(0, 0, 0));
-    controller.setCamera(camera);
+    camera = new camera::Orbit(this);
+    camera->link();
 
     utils::ArgumentStream stream;
     ground = new primitives::Ground(stream);
@@ -53,7 +49,7 @@ utils::Object *Window::findLeaf(QList<QString> tree) {
 void Window::receive(QString line) {
     utils::ArgumentStream stream(line);
 
-    if(stream.fetch("mode")) {
+    if(stream.fetch("color-mode")) {
         QString mode;
         stream >> mode;
 
@@ -79,7 +75,7 @@ void Window::receive(QString line) {
         QString type;
         stream >> name >> type;
 
-        QList<QString> tree = name.split('.');
+        QList<QString> tree = name.split('/');
         name = tree.back();
         tree.pop_back();
 
@@ -95,7 +91,7 @@ void Window::receive(QString line) {
         } else if(type=="model") {
             child = new primitives::Model(stream);
         } else if(type=="empty") {
-            child = new utils::Object(stream);
+            child = new primitives::Empty(stream);
         } else {
             qDebug() << "unknown object type:" << type;
             return;
@@ -112,7 +108,7 @@ void Window::receive(QString line) {
         QString name;
         stream >> name;
 
-        const QList<QString> tree = name.split('.');
+        const QList<QString> tree = name.split('/');
 
         utils::Object *object = findLeaf(tree);
 
@@ -128,6 +124,27 @@ void Window::receive(QString line) {
         float x, y, z;
         stream >> x >> y >> z;
 
-        controller.setCenter(QVector3D(x, y, z));
+        camera->setCenter(QVector3D(x, y, z));
+    }
+
+    if(stream.fetch("camera-mode")) {
+        QString mode;
+        stream >> mode;
+
+        if(mode=="orbit") {
+            if(camera) {
+                delete camera;
+                camera = nullptr;
+            }
+            camera = new camera::Orbit(this);
+            camera->link();
+        } else if(mode=="planar") {
+            if(camera) {
+                delete camera;
+                camera = nullptr;
+            }
+            camera = new camera::Planar(this);
+            camera->link();
+        }
     }
 }

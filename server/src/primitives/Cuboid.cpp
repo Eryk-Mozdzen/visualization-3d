@@ -1,4 +1,4 @@
-#include "Cuboid.h"
+#include "primitives/Cuboid.h"
 
 namespace primitives {
 

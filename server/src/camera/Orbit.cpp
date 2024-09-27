@@ -1,16 +1,18 @@
-#include <Qt3DExtras>
-#include <Qt3DCore>
-#include <Qt3DRender>
-#include <Qt3DInput>
-#include <QMouseEvent>
+#include "camera/Orbit.h"
 
-#include "CameraController.h"
+namespace camera {
 
-CameraController::CameraController(Qt3DCore::QNode *parent) : Qt3DExtras::QAbstractCameraController{parent} {
+Orbit::Orbit(Qt3DExtras::Qt3DWindow *window) : AbstractCamera{window} {
 
 }
 
-void CameraController::moveCamera(const InputState &state, float dt) {
+void Orbit::cameraSetup(Qt3DRender::QCamera *camera) {
+    camera->lens()->setPerspectiveProjection(45, 16./9., 0.1, 1000);
+    camera->setPosition(QVector3D(0, -4, 2));
+    camera->setViewCenter(QVector3D(0, 0, 0));
+}
+
+void Orbit::moveCamera(const InputState &state, float dt) {
     Qt3DRender::QCamera *camera = this->camera();
 
     if(camera==nullptr) {
@@ -41,10 +43,4 @@ void CameraController::moveCamera(const InputState &state, float dt) {
     last = state;
 }
 
-void CameraController::setCenter(const QVector3D center) {
-    Qt3DRender::QCamera *camera = this->camera();
-
-    const QVector3D delta = center - camera->viewCenter();
-
-    camera->translateWorld(delta);
 }

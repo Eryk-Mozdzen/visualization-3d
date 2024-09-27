@@ -17,8 +17,11 @@ REQUIRED)
 add_executable(${PROJECT_NAME}
 	"src/main.cpp"
 	"src/Window.cpp"
-	"src/CameraController.cpp"
 	"src/Server.cpp"
+
+	"src/camera/AbstractCamera.cpp"
+	"src/camera/Orbit.cpp"
+	"src/camera/Planar.cpp"
 
 	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"
@@ -30,6 +33,7 @@ add_executable(${PROJECT_NAME}
 	"src/primitives/Cylinder.cpp"
 	"src/primitives/Cuboid.cpp"
 	"src/primitives/Model.cpp"
+	"src/primitives/Empty.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

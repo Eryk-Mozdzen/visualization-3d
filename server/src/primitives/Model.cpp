@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "primitives/Model.h"
 
 namespace primitives {
 

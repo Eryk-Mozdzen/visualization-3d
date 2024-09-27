@@ -1,8 +1,8 @@
 #pragma once
 
-#include "camera/AbstractCamera.h"
+#include "cam/AbstractCamera.h"
 
-namespace camera {
+namespace cam {
 
 class Orbit : public AbstractCamera {
     InputState last;

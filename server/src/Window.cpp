@@ -1,6 +1,6 @@
 #include "Window.h"
-#include "camera/Orbit.h"
-#include "camera/Planar.h"
+#include "cam/Orbit.h"
+#include "cam/Planar.h"
 #include "utils/Object.h"
 #include "utils/ArgumentStream.h"
 #include "primitives/Ground.h"
@@ -15,7 +15,7 @@ Window::Window() {
     defaultFrameGraph()->setClearColor(Qt::black);
     setRootEntity(utils::Object::getRoot());
 
-    camera = new camera::Orbit(this);
+    camera = new cam::Orbit(this);
     camera->link();
 
     utils::ArgumentStream stream;
@@ -136,14 +136,14 @@ void Window::receive(QString line) {
                 delete camera;
                 camera = nullptr;
             }
-            camera = new camera::Orbit(this);
+            camera = new cam::Orbit(this);
             camera->link();
         } else if(mode=="planar") {
             if(camera) {
                 delete camera;
                 camera = nullptr;
             }
-            camera = new camera::Planar(this);
+            camera = new cam::Planar(this);
             camera->link();
         }
     }

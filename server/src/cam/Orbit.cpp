@@ -1,6 +1,6 @@
-#include "camera/Orbit.h"
+#include "cam/Orbit.h"
 
-namespace camera {
+namespace cam {
 
 Orbit::Orbit(Qt3DExtras::Qt3DWindow *window) : AbstractCamera{window} {
 

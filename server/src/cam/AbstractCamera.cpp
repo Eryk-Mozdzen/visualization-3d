@@ -1,7 +1,7 @@
-#include "camera/AbstractCamera.h"
+#include "cam/AbstractCamera.h"
 #include "utils/Object.h"
 
-namespace camera {
+namespace cam {
 
 AbstractCamera::AbstractCamera(Qt3DExtras::Qt3DWindow *window) : Qt3DExtras::QAbstractCameraController{utils::Object::getRoot()}, window{window} {
 

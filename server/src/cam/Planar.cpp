@@ -1,6 +1,6 @@
-#include "camera/Planar.h"
+#include "cam/Planar.h"
 
-namespace camera {
+namespace cam {
 
 Planar::Planar(Qt3DExtras::Qt3DWindow *window) : AbstractCamera{window} {
 
@@ -51,9 +51,15 @@ void Planar::moveCamera(const InputState &state, float dt) {
         zoom +=state.tzAxisValue*dt*zoom*10;
     }
 
-    if(state.middleMouseButtonActive) {
-        camera->translateWorld(QVector3D(-state.rxAxisValue, -state.ryAxisValue, 0)*dt/zoom);
+    if(state.rightMouseButtonActive) {
+        camera->translateWorld(QVector3D(
+            -dt*(state.rxAxisValue + last.rxAxisValue)*0.5*zoom*window->width()/2,
+            -dt*(state.ryAxisValue + last.ryAxisValue)*0.5*zoom*window->height()/2,
+            0
+        ));
     }
+
+    last = state;
 }
 
 }

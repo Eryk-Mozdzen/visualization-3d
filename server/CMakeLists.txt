@@ -19,9 +19,9 @@ add_executable(${PROJECT_NAME}
 	"src/Window.cpp"
 	"src/Server.cpp"
 
-	"src/camera/AbstractCamera.cpp"
-	"src/camera/Orbit.cpp"
-	"src/camera/Planar.cpp"
+	"src/cam/AbstractCamera.cpp"
+	"src/cam/Orbit.cpp"
+	"src/cam/Planar.cpp"
 
 	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"

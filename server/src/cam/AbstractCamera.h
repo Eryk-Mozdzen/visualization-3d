@@ -3,7 +3,7 @@
 #include <Qt3DExtras>
 #include <Qt3DCore>
 
-namespace camera {
+namespace cam {
 
 class AbstractCamera : public Qt3DExtras::QAbstractCameraController {
     Q_OBJECT

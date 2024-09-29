@@ -17,7 +17,7 @@ class Window : public Qt3DExtras::Qt3DWindow {
     utils::Object *findLeaf(QList<QString> tree);
 
 public slots:
-    void receive(QString line);
+    void receive(const QString line);
 
 public:
     Window();

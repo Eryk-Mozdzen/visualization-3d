@@ -4,9 +4,7 @@
 #include "Server.h"
 
 Server::Server(QObject *parent) : QTcpServer{parent} {
-    if(!this->listen(QHostAddress::LocalHost, 8080)) {
-        qDebug() << "server could not start";
-    }
+    this->listen(QHostAddress::LocalHost, 8080);
 }
 
 void Server::incomingConnection(qintptr socketDescriptor) {
@@ -14,12 +12,12 @@ void Server::incomingConnection(qintptr socketDescriptor) {
 
     if(socket->setSocketDescriptor(socketDescriptor)) {
         connect(socket, &QTcpSocket::readyRead, this, [this, socket]() {
-            QList<QByteArray> lines = socket->readAll().split('\n');
-
-            lines.removeAll(QByteArray());
+            const QList<QByteArray> lines = socket->readAll().split('\n');
 
             for(const QByteArray &line : lines) {
-                receive(line);
+                if(line.size()>0) {
+                    receive(line);
+                }
             }
         });
 

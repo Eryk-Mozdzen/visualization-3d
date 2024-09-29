@@ -8,10 +8,10 @@ Planar::Planar(Qt3DExtras::Qt3DWindow *window) : AbstractCamera{window} {
 
 void Planar::cameraSetup(Qt3DRender::QCamera *camera) {
     camera->lens()->setOrthographicProjection(
-        -zoom*window->width()/2,
-        +zoom*window->width()/2,
-        -zoom*window->height()/2,
-        +zoom*window->height()/2,
+        -zoom*0.5*window->width(),
+        +zoom*0.5*window->width(),
+        -zoom*0.5*window->height(),
+        +zoom*0.5*window->height(),
         0, 10
     );
     camera->setPosition(QVector3D(0, 0, 1));
@@ -40,10 +40,10 @@ void Planar::moveCamera(const InputState &state, float dt) {
     camera->setUpVector(QVector3D(0, 1, 0));
 
     camera->lens()->setOrthographicProjection(
-        -zoom*window->width()/2,
-        +zoom*window->width()/2,
-        -zoom*window->height()/2,
-        +zoom*window->height()/2,
+        -zoom*0.5*window->width(),
+        +zoom*0.5*window->width(),
+        -zoom*0.5*window->height(),
+        +zoom*0.5*window->height(),
         0, 10
     );
 
@@ -51,15 +51,13 @@ void Planar::moveCamera(const InputState &state, float dt) {
         zoom +=state.tzAxisValue*dt*zoom*10;
     }
 
-    if(state.rightMouseButtonActive) {
+    if(state.middleMouseButtonActive) {
         camera->translateWorld(QVector3D(
-            -dt*(state.rxAxisValue + last.rxAxisValue)*0.5*zoom*window->width()/2,
-            -dt*(state.ryAxisValue + last.ryAxisValue)*0.5*zoom*window->height()/2,
+            -dt*state.rxAxisValue*zoom*window->width()/2,
+            -dt*state.ryAxisValue*zoom*window->height()/2,
             0
         ));
     }
-
-    last = state;
 }
 
 }

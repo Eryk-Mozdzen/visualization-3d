@@ -46,7 +46,7 @@ utils::Object *Window::findLeaf(QList<QString> tree) {
     return leaf;
 }
 
-void Window::receive(QString line) {
+void Window::receive(const QString line) {
     utils::ArgumentStream stream(line);
 
     if(stream.fetch("color-mode")) {

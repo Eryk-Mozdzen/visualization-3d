@@ -9,7 +9,7 @@ protected:
     void incomingConnection(qintptr socketDescriptor) override;
 
 signals:
-    void receive(QString line);
+    void receive(const QString line);
 
 public:
     Server(QObject *parent=nullptr);

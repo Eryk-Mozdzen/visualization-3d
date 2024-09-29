@@ -6,7 +6,6 @@ namespace cam {
 
 class Planar : public AbstractCamera {
     float zoom = 0.01;
-    InputState last;
 
     void cameraSetup(Qt3DRender::QCamera *camera);
     void moveCamera(const InputState &state, float dt);

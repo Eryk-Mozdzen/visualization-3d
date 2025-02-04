@@ -10,6 +10,7 @@ void Orbit::cameraSetup(Qt3DRender::QCamera *camera) {
     camera->lens()->setPerspectiveProjection(45, 16./9., 0.1, 1000);
     camera->setPosition(QVector3D(0, -4, 2));
     camera->setViewCenter(QVector3D(0, 0, 0));
+    camera->setUpVector(QVector3D(0, 0, 1));
 }
 
 void Orbit::moveCamera(const InputState &state, float dt) {

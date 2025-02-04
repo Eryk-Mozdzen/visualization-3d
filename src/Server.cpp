@@ -6,6 +6,8 @@
 
 Server::Server(QObject *parent) : QTcpServer{parent} {
     this->listen(QHostAddress::LocalHost, 8080);
+
+    qDebug() << "Starting listening on localhost port 8080";
 }
 
 void Server::incomingConnection(qintptr socketDescriptor) {

@@ -3,7 +3,7 @@ import json
 import numpy
 import time
 
-soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+soc = socket.socket()
 soc.connect(('localhost', 8080))
 
 def write(msg):

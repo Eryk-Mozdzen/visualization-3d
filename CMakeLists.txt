@@ -26,7 +26,6 @@ add_executable(${PROJECT_NAME}
 	"src/utils/Object.cpp"
 	"src/utils/Material.cpp"
 	"src/utils/Transform.cpp"
-	"src/utils/ArgumentStream.cpp"
 
 	"src/primitives/Ground.cpp"
 	"src/primitives/Sphere.cpp"

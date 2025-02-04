@@ -6,7 +6,7 @@ namespace primitives {
 
 class Empty : public utils::Object {
 public:
-    Empty(utils::ArgumentStream &stream);
+    Empty(const QJsonObject json);
 };
 
 }

@@ -1,16 +1,16 @@
 #include <Qt3DExtras>
 #include <Qt3DRender>
+#include <QJsonObject>
 
 #include "Object.h"
 #include "utils/Material.h"
 #include "utils/Transform.h"
-#include "utils/ArgumentStream.h"
 
 namespace utils {
 
 Qt3DCore::QEntity *Object::root = new Qt3DCore::QEntity();
 
-Object::Object(ArgumentStream &stream) : parent{nullptr} {
+Object::Object(const QJsonObject json) : parent{nullptr} {
     entity = new Qt3DCore::QEntity(root);
 
     material = new Material();
@@ -20,14 +20,7 @@ Object::Object(ArgumentStream &stream) : parent{nullptr} {
     entity->addComponent(material);
     entity->addComponent(transformGlobal);
 
-    if(stream.fetch("transform")) {
-        stream >> *transformLocal;
-        update();
-    }
-
-    if(stream.fetch("material")) {
-        stream >> *material;
-    }
+    apply(json);
 }
 
 Object::~Object() {
@@ -63,6 +56,22 @@ void Object::update() {
     }
 }
 
+void Object::apply(const QJsonObject json) {
+    if(json.contains("transform")) {
+        const QJsonObject transform = json["transform"].toObject();
+
+        transformLocal->apply(transform);
+
+        update();
+    }
+
+    if(json.contains("material")) {
+        const QJsonObject transform = json["material"].toObject();
+
+        material->apply(transform);
+    }
+}
+
 Material * Object::getMaterial() const {
     return material;
 }
@@ -77,20 +86,6 @@ Transform * Object::getTransformLocal() const {
 
 Qt3DCore::QEntity * Object::getRoot() {
     return Object::root;
-}
-
-ArgumentStream & operator>>(ArgumentStream &stream, Object &object) {
-
-    if(stream.fetch("transform")) {
-        stream >> *object.transformLocal;
-        object.update();
-    }
-
-    if(stream.fetch("material")) {
-        stream >> *object.material;
-    }
-
-    return stream;
 }
 
 }

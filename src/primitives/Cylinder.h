@@ -6,7 +6,7 @@ namespace primitives {
 
 class Cylinder : public utils::Object {
 public:
-    Cylinder(utils::ArgumentStream &stream);
+    Cylinder(const QJsonObject json);
 };
 
 }

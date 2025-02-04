@@ -2,10 +2,10 @@
 
 #include <Qt3DExtras>
 #include <Qt3DRender>
+#include <QJsonObject>
 
 #include "utils/Material.h"
 #include "utils/Transform.h"
-#include "utils/ArgumentStream.h"
 
 namespace utils {
 
@@ -22,20 +22,19 @@ protected:
     QMap<QString, Object *> childs;
 
 public:
-    Object(ArgumentStream &stream);
+    Object(const QJsonObject json);
     ~Object();
 
     void addChild(const QString name, Object *child);
     Object * getChild(const QString name);
     void update();
+    void apply(const QJsonObject json);
 
     Material * getMaterial() const;
     Transform * getTransformGlobal() const;
     Transform * getTransformLocal() const;
 
     static Qt3DCore::QEntity * getRoot();
-
-    friend ArgumentStream & operator>>(ArgumentStream &stream, Object &object);
 };
 
 }

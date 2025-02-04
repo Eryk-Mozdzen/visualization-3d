@@ -1,5 +1,6 @@
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QJsonDocument>
 
 #include "Server.h"
 
@@ -12,11 +13,18 @@ void Server::incomingConnection(qintptr socketDescriptor) {
 
     if(socket->setSocketDescriptor(socketDescriptor)) {
         connect(socket, &QTcpSocket::readyRead, this, [this, socket]() {
-            const QList<QByteArray> lines = socket->readAll().split('\n');
+            QByteArray bytes = socket->readAll();
+            QByteArray buffer;
 
-            for(const QByteArray &line : lines) {
-                if(line.size()>0) {
-                    receive(line);
+            while(bytes.size()>0) {
+                buffer.append(bytes.front());
+                bytes.remove(0, 1);
+
+                const QJsonDocument json = QJsonDocument::fromJson(buffer);
+
+                if(!json.isNull()) {
+                    receive(json.object());
+                    buffer.clear();
                 }
             }
         });

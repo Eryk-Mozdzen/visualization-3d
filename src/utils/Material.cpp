@@ -1,7 +1,7 @@
 #include <Qt3DExtras>
+#include <QJsonObject>
 
 #include "Material.h"
-#include "utils/ArgumentStream.h"
 
 namespace utils {
 
@@ -15,17 +15,20 @@ void Material::setColor(int r, int g, int b) {
     setDiffuse(QColor(r, g, b));
 }
 
-ArgumentStream & operator>>(ArgumentStream &stream, Material &material) {
+void Material::apply(const QJsonObject material) {
 
-    if(stream.fetch("color")) {
-        int r, g, b;
-        stream >> r >> g >> b;
+    if(material.contains("color")) {
+        const QJsonArray color = material["color"].toArray();
 
-        material.setAmbient(QColor(128, 128, 128));
-        material.setDiffuse(QColor(r, g, b));
+        if(color.size()==3) {
+            const double r = color[0].toDouble();
+            const double g = color[1].toDouble();
+            const double b = color[2].toDouble();
+
+            setAmbient(QColor(128, 128, 128));
+            setDiffuse(QColor(r, g, b));
+        }
     }
-
-    return stream;
 }
 
 QDebug operator<<(QDebug stream, const Material &material) {

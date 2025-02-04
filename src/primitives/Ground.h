@@ -11,7 +11,7 @@ class Ground : public utils::Object {
     Qt3DExtras::QPhongMaterial *material_y;
 
 public:
-    Ground(utils::ArgumentStream &stream);
+    Ground();
 
     void setColors(const QColor grid, const QColor x, const QColor y);
 };

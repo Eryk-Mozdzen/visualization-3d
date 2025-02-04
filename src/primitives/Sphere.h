@@ -6,7 +6,7 @@ namespace primitives {
 
 class Sphere : public utils::Object {
 public:
-    Sphere(utils::ArgumentStream &stream);
+    Sphere(const QJsonObject json);
 };
 
 }

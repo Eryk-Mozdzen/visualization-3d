@@ -4,9 +4,9 @@
 
 namespace primitives {
 
-class Model : public utils::Object {
+class Cuboid : public utils::Object {
 public:
-    Model(utils::ArgumentStream &stream);
+    Cuboid(const QJsonObject json);
 };
 
 }

@@ -2,7 +2,7 @@
 
 namespace primitives {
 
-Ground::Ground(utils::ArgumentStream &stream) : Object{stream} {
+Ground::Ground() : Object{QJsonObject()} {
     constexpr int num = 1000;
 
     {

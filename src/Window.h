@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Qt3DExtras>
+#include <QJsonObject>
 
 #include "cam/AbstractCamera.h"
 #include "utils/Object.h"
@@ -11,13 +12,13 @@ class Window : public Qt3DExtras::Qt3DWindow {
 
     cam::AbstractCamera *camera = nullptr;
 
-    primitives::Ground *ground;
+    primitives::Ground ground;
     QMap<QString, utils::Object *> objects;
 
-    utils::Object *findLeaf(QList<QString> tree);
+    utils::Object *getObject(QList<QString> tree);
 
 public slots:
-    void receive(const QString line);
+    void receive(const QJsonObject json);
 
 public:
     Window();

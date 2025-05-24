@@ -36,7 +36,7 @@ void Transform::apply(const QJsonObject transform) {
     }
 
     if(transform.contains("quaternion")) {
-        const QJsonArray quaternion = transform["rpy"].toArray();
+        const QJsonArray quaternion = transform["quaternion"].toArray();
 
         if(quaternion.size()==4) {
             const double w = quaternion[0].toDouble();

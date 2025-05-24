@@ -1,3 +1,4 @@
+#include <cmath>
 #include <Qt3DCore>
 #include <QJsonObject>
 
@@ -11,20 +12,18 @@ void Transform::apply(const QJsonObject transform) {
         const QJsonArray rpy = transform["rpy"].toArray();
 
         if(rpy.size()==3) {
-            const double roll = rpy[0].toDouble();
-            const double pitch = rpy[1].toDouble();
-            const double yaw = rpy[2].toDouble();
+            constexpr double deg2rad = M_PI/180;
 
-            const double rollHalf = Transform::deg2rad*roll/2;
-            const double pitchHalf = Transform::deg2rad*pitch/2;
-            const double yawHalf = Transform::deg2rad*yaw/2;
+            const double roll  = deg2rad*rpy[0].toDouble();
+            const double pitch = deg2rad*rpy[1].toDouble();
+            const double yaw   = deg2rad*rpy[2].toDouble();
 
-            const double cosRollHalf = std::cos(rollHalf);
-            const double sinRollHalf = std::sin(rollHalf);
-            const double cosPitchHalf = std::cos(pitchHalf);
-            const double sinPitchHalf = std::sin(pitchHalf);
-            const double cosYawHalf = std::cos(yawHalf);
-            const double sinYawHalf = std::sin(yawHalf);
+            const double cosRollHalf = std::cos(roll/2);
+            const double sinRollHalf = std::sin(roll/2);
+            const double cosPitchHalf = std::cos(pitch/2);
+            const double sinPitchHalf = std::sin(pitch/2);
+            const double cosYawHalf = std::cos(yaw/2);
+            const double sinYawHalf = std::sin(yaw/2);
 
             const double w = cosRollHalf * cosPitchHalf * cosYawHalf + sinRollHalf * sinPitchHalf * sinYawHalf;
             const double x = sinRollHalf * cosPitchHalf * cosYawHalf - cosRollHalf * sinPitchHalf * sinYawHalf;

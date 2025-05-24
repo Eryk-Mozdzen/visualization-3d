@@ -15,21 +15,21 @@ void Transform::apply(const QJsonObject transform) {
             const double pitch = rpy[1].toDouble();
             const double yaw = rpy[2].toDouble();
 
-            const float rollHalf = Transform::deg2rad*roll/2;
-            const float pitchHalf = Transform::deg2rad*pitch/2;
-            const float yawHalf = Transform::deg2rad*yaw/2;
+            const double rollHalf = Transform::deg2rad*roll/2;
+            const double pitchHalf = Transform::deg2rad*pitch/2;
+            const double yawHalf = Transform::deg2rad*yaw/2;
 
-            const float cosRollHalf = std::cos(rollHalf);
-            const float sinRollHalf = std::sin(rollHalf);
-            const float cosPitchHalf = std::cos(pitchHalf);
-            const float sinPitchHalf = std::sin(pitchHalf);
-            const float cosYawHalf = std::cos(yawHalf);
-            const float sinYawHalf = std::sin(yawHalf);
+            const double cosRollHalf = std::cos(rollHalf);
+            const double sinRollHalf = std::sin(rollHalf);
+            const double cosPitchHalf = std::cos(pitchHalf);
+            const double sinPitchHalf = std::sin(pitchHalf);
+            const double cosYawHalf = std::cos(yawHalf);
+            const double sinYawHalf = std::sin(yawHalf);
 
-            const float w = cosRollHalf * cosPitchHalf * cosYawHalf + sinRollHalf * sinPitchHalf * sinYawHalf;
-            const float x = sinRollHalf * cosPitchHalf * cosYawHalf - cosRollHalf * sinPitchHalf * sinYawHalf;
-            const float y = cosRollHalf * sinPitchHalf * cosYawHalf + sinRollHalf * cosPitchHalf * sinYawHalf;
-            const float z = cosRollHalf * cosPitchHalf * sinYawHalf - sinRollHalf * sinPitchHalf * cosYawHalf;
+            const double w = cosRollHalf * cosPitchHalf * cosYawHalf + sinRollHalf * sinPitchHalf * sinYawHalf;
+            const double x = sinRollHalf * cosPitchHalf * cosYawHalf - cosRollHalf * sinPitchHalf * sinYawHalf;
+            const double y = cosRollHalf * sinPitchHalf * cosYawHalf + sinRollHalf * cosPitchHalf * sinYawHalf;
+            const double z = cosRollHalf * cosPitchHalf * sinYawHalf - sinRollHalf * sinPitchHalf * cosYawHalf;
 
             setRotation(QQuaternion(w, x, y, z));
         }
